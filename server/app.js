@@ -8,9 +8,13 @@ const connectDB = require('./db/connect');
 const notFoundMiddles = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+const products = require('./routes/products');
+
 app.get('/', (req, res) => {
   res.send('store api');
 });
+
+app.use('/api/v1/products', products);
 
 app.use(notFoundMiddles);
 app.use(errorHandlerMiddleware);
@@ -21,7 +25,7 @@ const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
     app.listen(PORT, () => {
-      console.log(`server is listening on port ${PORT}...`);
+      console.log(`Server is listening on port ${PORT}...`);
     });
   } catch (error) {
     console.log(error);
